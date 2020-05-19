@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Bishe.mapper.StuMapper">
+
+	<select id="check" resultType="java.lang.Integer" parameterType="com.Bishe.bean.Student">
+	 	select count(*)
+	 	from students
+	 	where
+	 		stuid =  ${stuid} 
+	 		and
+	 		truename =  #{truename}
+	 	
+	</select>
+
+	<update id="affirmationstu" parameterType="com.Bishe.bean.Student">
+	update users
+	set stuid=${stuid} 
+	where userid=#{userid}
+	</update>
+	
+	
+	<update id="affirmationuser" parameterType="com.Bishe.bean.Student">
+	update students
+	set userid=#{userid} 
+	where stuid=${stuid}
+	</update>
+	
+	<select id="checkconfirm" resultType="java.lang.Integer" parameterType="java.lang.String">
+	select count(*)
+	from confirm
+	where userid=#{userid} and confirmuserid=#{confirmuserid}
+	</select>
+	
+	<insert id="confirm" parameterType="java.lang.String">
+	insert into confirm values (#{userid},#{confirmuserid})
+	</insert>
+</mapper>

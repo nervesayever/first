@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Bishe.mapper.UserMapper">
+
+    <select id="login" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*)
+        from users 
+        where
+            <if test="username!=null"> username =  #{username} </if>
+            and
+            <if test="password!=null"> password = #{password}</if>           
+        
+    </select>
+    <select id="totalrow" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*)
+        from ${pname}   
+        <where> <if test="branchid!=null"> branchid =  #{branchid} </if></where>      
+    </select>
+    
+    <insert id="addUser" parameterType="com.Bishe.bean.User">
+     		insert into users
+     		(username,age,address,userid,password,telnum)
+     		values(#{username},#{age},#{address},#{userid},#{password},#{telnum})
+    </insert>
+    
+    <update id="addactlevel" parameterType="java.lang.String">
+   		update users
+    	set
+    	actlevel=actlevel+1
+    	<where>
+    	<if test="userid!=null">userid = #{confirmuserid}</if>
+    	</where> 
+    
+    </update>
+    
+    
+    <delete id="deleteUser" parameterType="java.lang.String">
+    	delete users,branchmenber
+    	from users left join branchmenber on  
+    	users.userid = branchmenber.userid
+    	<where>
+    	<if test="userid!=null"> users.userid = #{userid}</if>
+    	</where> 	
+    </delete>
+    
+    <update id="updateUser" parameterType="com.Bishe.bean.User">
+    	update users
+    	set
+    	username=#{username},age=#{age},address=#{address},telnum=#{telnum}
+    	where userid=#{userid}  
+    </update>
+    
+</mapper>

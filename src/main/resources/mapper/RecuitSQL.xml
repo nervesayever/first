@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Bishe.mapper.RecuitMapper">
+	<insert id="addrecuit" parameterType="com.Bishe.bean.Recuitment">
+		insert into 
+		recuitment
+		(enddate,recuitcompany,recuitposition,companyinfo,positionrequire,compensation,phone,email)
+		values(#{enddate},#{recuitcompany},#{recuitposition},#{companyinfo},#{positionrequire},#{compensation},#{phone},#{email})
+	</insert>
+	
+	<delete id="deleterecuit" parameterType="java.lang.Integer">
+		delete 
+		from recuitment
+		<where>
+		recuitid= #{recuitcompany}
+		</where>
+	
+	</delete>
+</mapper>

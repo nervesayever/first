@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Bishe.mapper.BranchMapper">
+
+	<resultMap id="viewMenberMap" type="BranchMenber">	
+	    <id property="userid" column="userid" />	 
+	     <result  property="username" column="username" />  
+	</resultMap>
+	     
+	<select id="viewMenber" parameterType="java.lang.String" resultMap="viewMenberMap">
+		select userid,username
+		from branchmenber 
+		<where> <if test="branchid!=null"> branchid =  #{branchid} </if></where>
+		LIMIT ${startrow},3
+	</select>
+	
+	<select id="check" parameterType="java.lang.String" resultType="java.lang.Integer" >
+		select count(*)
+		from branchmenber 
+		<where> <if test="branchid!=null"> branchid =  #{branchid} </if>
+		and
+		<if test="userid!=null"> userid =  #{userid} </if>
+		</where>		
+	</select>
+	
+	<delete id="quit" parameterType="java.lang.String">
+		delete 
+		from branchmenber
+		where userid=#{userid} and branchid=#{branchid}
+	</delete>
+
+</mapper>

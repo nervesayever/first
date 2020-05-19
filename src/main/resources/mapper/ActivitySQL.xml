@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Bishe.mapper.ActivityMapper">
+
+	<select id="checkActivity" resultType="java.lang.Integer">
+		select count(*) 
+		from activitymenber
+		where actid=${actid} and userid=#{userid}
+	</select>
+	
+	<insert id="addActivity" parameterType="com.Bishe.bean.Activity">
+		insert into activity
+		(acttitle,actcontent,acttime,branchid,actpicurl,actegoryid)
+		values(#{acttitle},#{actcontent},#{acttime},#{branchid},#{actpicurl},#{actegoryid})
+	</insert>
+	
+	<delete id="deleteActivity">
+		delete activity,activitymenber
+	    	from activity left join activitymenber on  
+	    	activity.actid = activitymenber.actid
+	    	<where>
+	    	<if test="userid!=null"> activity.actid = #{actid}</if>
+	    	</where> 	
+	</delete>
+	
+	<select id="viewActivity" parameterType="java.lang.String" resultType="com.Bishe.bean.Activity">
+		select *
+		from activity
+		<where> <if test="branchid!=null"> branchid =  #{branchid} </if></where>
+			
+	</select>
+	
+	<insert id="joinActivity" >
+		insert into activitymenber
+		values(#{actid},#{userid})
+	</insert>
+	
+	<update id="addnum">
+		update activity
+		set actmenbernum=actmenbernum+1
+		where actid=${actid}
+	</update>
+	
+	<delete id="cancelActivity">
+		delete 
+		from activitymenber
+		where userid=#{userid} and actid=${actid}
+	</delete>
+	
+	<update id="reducenum">
+		update activity
+		set actmenbernum=actmenbernum-1
+		where actid=${actid}
+	</update>
+</mapper>
+

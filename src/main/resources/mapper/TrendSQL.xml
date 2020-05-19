@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Bishe.mapper.TrendrMapper">
+
+		<insert id="addTrend" parameterType="com.Bishe.bean.Trend">
+			insert into trend(userid,trendid,date,dingnum,commentnum,picurl,picurl1,picurl2)
+			values(#{userid},#{trendid},#{date},#{dingnum},#{commentnum},#{picurl},#{picurl1},#{picurl2})
+		
+		</insert>
+		<delete id="deleteTrend" parameterType="java.lang.String">
+			delete trend,comment
+    	from trend left join comment on  
+    	trend.trendid = comment.trendid
+    	<where>
+    	<if test="trendid!=null"> trend.trendid = #{trendid}</if>
+    	</where>
+		</delete>
+
+		<select id="viewTrend" resultType="com.Bishe.bean.Trend">
+			select * from trend
+		</select>
+		
+		<select id="viewComment" resultType="com.Bishe.bean.Comment">
+			select * from comment
+		</select>
+</mapper>
